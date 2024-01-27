@@ -1,4 +1,5 @@
 const readline = require("readline");
+const { clearScreenDown } = require("readline"); // Import clearScreenDown function
 
 class DescriptiveStatistics {
   constructor(data) {
@@ -16,16 +17,14 @@ class DescriptiveStatistics {
       frequencyMap[num] = (frequencyMap[num] || 0) + 1;
     });
     let maxFrequency = 0;
-    let modes = [];
+    let modeValue = null;
     for (const num in frequencyMap) {
       if (frequencyMap[num] > maxFrequency) {
         maxFrequency = frequencyMap[num];
-        modes = [parseInt(num, 10)];
-      } else if (frequencyMap[num] === maxFrequency) {
-        modes.push(parseInt(num, 10));
+        modeValue = parseInt(num, 10);
       }
     }
-    return modes;
+    return modeValue;
   }
 
   median() {
@@ -48,12 +47,15 @@ function promptInput() {
   console.log("Welcome! Please enter your dataset.");
   rl.question("Enter numbers separated by spaces: ", (input) => {
     const numbers = input.split(" ").map(Number);
+    clearScreen();
     rl.question(
       "Choose an option:\n1. Measure of Central Tendency\n2. Measure of Dispersion\nEnter your choice (1 or 2): ",
       (option) => {
         if (option === "1") {
+          clearScreen();
           promptCentralTendency(numbers);
         } else if (option === "2") {
+          clearScreen();
           console.log("Sorry, this option is not ready but coming soon.");
           rl.close();
         } else {
@@ -71,22 +73,31 @@ function promptCentralTendency(data) {
     "Choose a measure of central tendency:\n1. Mean\n2. Mode\n3. Median\n4. Go back to previous step\nEnter your choice (1, 2, 3, or 4): ",
     (choice) => {
       if (choice === "1") {
+        clearScreen();
         console.log("Mean:", stats.mean());
         rl.close();
       } else if (choice === "2") {
+        clearScreen();
         console.log("Mode:", stats.mode());
         rl.close();
       } else if (choice === "3") {
+        clearScreen();
         console.log("Median:", stats.median());
         rl.close();
       } else if (choice === "4") {
-        promptInput(); // Go back to the previous step
+        promptInput();
       } else {
         console.log("Invalid choice!");
         rl.close();
       }
     }
   );
+}
+
+// Function to clear the screen using ANSI escape codes
+function clearScreen() {
+  // ANSI escape code to clear the terminal screen
+  process.stdout.write("\x1B[2J\x1B[0f");
 }
 
 promptInput();
