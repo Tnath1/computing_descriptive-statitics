@@ -5,7 +5,7 @@ class DescriptiveStatistics {
   constructor(data) {
     this.data = data;
   }
-
+  // these method is calculting for ungrouped data for the measure of central tendency.
   mean() {
     const sum = this.data.reduce((acc, val) => acc + val, 0);
     return sum / this.data.length;
@@ -42,50 +42,63 @@ const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
 });
-
+const numbers = [];
 function promptInput() {
   console.log("Welcome! Please enter your dataset.");
   rl.question("Enter numbers separated by spaces: ", (input) => {
-    const numbers = input.split(" ").map(Number);
+    //numbers = input.split(" ").map(Number);
+    input.split(" ").forEach((val) => {
+      numbers.push(Number(val));
+    });
     clearScreen();
-    rl.question(
-      "Choose an option:\n1. Measure of Central Tendency\n2. Measure of Dispersion\nEnter your choice (1 or 2): ",
-      (option) => {
-        if (option === "1") {
-          clearScreen();
-          promptCentralTendency(numbers);
-        } else if (option === "2") {
-          clearScreen();
-          console.log("Sorry, this option is not ready but coming soon.");
-          rl.close();
-        } else {
-          console.log("Invalid option!");
-          rl.close();
-        }
-      }
-    );
+    measureOf();
   });
+}
+function measureOf() {
+  console.log(`Your data sets: ${numbers}`);
+
+  rl.question(
+    "Choose an option:\n1. Measure of Central Tendency\n2. Measure of Dispersion\nEnter your choice (1 or 2): ",
+    (option) => {
+      if (option === "1") {
+        clearScreen();
+        promptCentralTendency(numbers);
+      } else if (option === "2") {
+        clearScreen();
+        console.log("Sorry, this option is not ready but coming soon.");
+        rl.close();
+      } else {
+        console.log("Invalid option!");
+        rl.close();
+      }
+    }
+  );
 }
 
 function promptCentralTendency(data) {
   const stats = new DescriptiveStatistics(data);
+  console.log(`Your data sets: ${numbers}`);
   rl.question(
     "Choose a measure of central tendency:\n1. Mean\n2. Mode\n3. Median\n4. Go back to previous step\nEnter your choice (1, 2, 3, or 4): ",
     (choice) => {
       if (choice === "1") {
         clearScreen();
+        console.log(`Your data sets: ${numbers}`);
         console.log("Mean:", stats.mean());
         rl.close();
       } else if (choice === "2") {
         clearScreen();
+        console.log(`Your data sets: ${numbers}`);
         console.log("Mode:", stats.mode());
         rl.close();
       } else if (choice === "3") {
         clearScreen();
+        console.log(`Your data sets: ${numbers}`);
         console.log("Median:", stats.median());
         rl.close();
       } else if (choice === "4") {
-        promptInput();
+        clearScreen();
+        measureOf();
       } else {
         console.log("Invalid choice!");
         rl.close();
