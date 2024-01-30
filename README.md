@@ -28,7 +28,7 @@ This is a simple command-line application that allows users to perform basic **d
 * **8Repeat or Exit:** Users can choose to perform additional calculations or exit the application.
 
 ## Installation 
-To install and run the Movie Renting API on your local machine, follow these steps:
+To install and run this **descriptive statistical app** on your local machine, follow these steps:
 
 * Clone this repository to your local machine.
 
